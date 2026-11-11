@@ -18,6 +18,7 @@ out = {}
 for ds, loader in LOADERS.items():
     d = loader()
     Xtr, ytr, Xva, yva = d["X_train"], d["y_train"], d["X_val"], d["y_val"]
+    # (1) Pairs of features that carry almost the same information (|r| >= 0.95).
     corr = Xtr.corr().abs().to_numpy()
     iu = np.triu_indices_from(corr, 1)
     vals = corr[iu]
@@ -27,16 +28,18 @@ for ds, loader in LOADERS.items():
     for a, b, v in pairs:
         if a not in drop and b not in drop:
             drop.add(b)
+    # (2) Rank features by Random Forest importance.
     rf = joblib.load(f"{RES}/models/{ds}_RandomForest.joblib")["model"]
     imp = pd.Series(rf.feature_importances_, index=Xtr.columns).sort_values(ascending=False)
     params = json.load(open(f"{RES}/{ds}_main.json"))["models"]["XGBoost"]["best_params"]
     rows = []
+    # (3) Retrain the tuned XGBoost on the top-5, 10, 20 ... features and on the set without correlated ones.
     ks = [k for k in [5, 10, 20, 30, 40] if k < len(imp)] + [len(imp)]
     subsets = [(f"top-{k}" if k < len(imp) else "all", list(imp.index[:k])) for k in ks]
     subsets.append(("all minus correlated", [c for c in Xtr.columns if c not in drop]))
     for name, cols in subsets:
         m = make_model("XGBoost", params); t = time.perf_counter(); m.fit(Xtr[cols], ytr); ft = time.perf_counter() - t
-        f = f1_score(yva, m.predict(Xva[cols]))
+        f = f1_score(yva, m.predict(Xva[cols]))  # scored on validation data, never on the test set
         rows.append(dict(subset=name, n_features=len(cols), val_f1=float(f), fit_seconds=float(ft)))
         print(ds, name, len(cols), round(f, 4), round(ft, 1), flush=True)
     out[ds] = dict(n_features=len(imp), n_corr_pairs=len(pairs), n_redundant=len(drop),

@@ -16,6 +16,7 @@ for ds, loader in LOADERS.items():
     res[ds] = {}
     for name in MODEL_ORDER:
         m = joblib.load(f"{OUT}/models/{ds}_{name}.joblib")["model"]
+        # Force one CPU thread for every model, so timings are comparable.
         if hasattr(m, "n_jobs"):
             m.n_jobs = 1
         if name == "XGBoost":
@@ -24,11 +25,14 @@ for ds, loader in LOADERS.items():
             m.set_params(n_jobs=1)
         Xn = X.to_numpy()
         rows = [X.iloc[[i]] for i in range(300)]
+        # Warm-up calls, so start-up costs are not timed.
         for r in rows[:10]:
             scores(m, name, r)
+        # Time 300 single-flow predictions; the median is the latency reported in the paper.
         ts = []
         for r in rows:
             t = time.perf_counter(); scores(m, name, r); ts.append(time.perf_counter() - t)
+        # Score the whole test set at once to measure batch throughput (flows per second).
         t = time.perf_counter(); scores(m, name, X); bt = time.perf_counter() - t
         res[ds][name] = dict(latency_ms_median=float(np.median(ts) * 1e3), latency_ms_p95=float(np.percentile(ts, 95) * 1e3),
                              throughput_flows_per_s=float(len(X) / bt))

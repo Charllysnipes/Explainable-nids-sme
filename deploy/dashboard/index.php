@@ -2,13 +2,17 @@
 // Live monitor: reads the scored flows written by the replay client (simulated live stream).
 require 'inc/db.php'; require 'inc/layout.php';
 $db = db();
+// The 'flows' table exists only after deploy/replay.py has run; show a hint until then.
 try { $db->query("SELECT 1 FROM flows LIMIT 1"); $hasFlows = true; } catch (PDOException $e) { $hasFlows = false; }
 page_start('Live monitor', 'index.php');
 if (!$hasFlows) { echo '<div class="card full msg error">No live data yet. Start the replay client (deploy/replay.py) to stream flows to the engine.</div>'; page_end(); exit; }
+// Summary figures for the four KPI tiles: flows, alerts, true alerts and mean latency.
 $k = $db->query("SELECT COUNT(*) n, SUM(alert) a, SUM(alert AND true_label!='Benign') tp, AVG(latency_ms) lat FROM flows")->fetch(PDO::FETCH_ASSOC);
+// The five most recent alerts, the last 300 flows for the chart, and the most common top reason.
 $recent = $db->query("SELECT * FROM flows WHERE alert=1 ORDER BY id DESC LIMIT 5")->fetchAll(PDO::FETCH_ASSOC);
 $series = array_reverse($db->query("SELECT id, prob, alert FROM flows ORDER BY id DESC LIMIT 300")->fetchAll(PDO::FETCH_ASSOC));
 $top = $db->query("SELECT f1 f, COUNT(*) c FROM flows WHERE alert=1 GROUP BY f1 ORDER BY c DESC LIMIT 5")->fetchAll(PDO::FETCH_ASSOC);
+// Share of alerts that were real attacks (precision), as a percentage.
 $prec = $k['a'] ? 100 * $k['tp'] / $k['a'] : 0;
 ?>
 <div class="card kpi"><div class="v"><?= number_format($k['n']) ?></div><div class="l">Flows analysed</div></div>

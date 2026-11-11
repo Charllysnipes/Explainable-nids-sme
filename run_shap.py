@@ -16,19 +16,22 @@ from scipy.stats import spearmanr
 from data_prep import LOADERS
 
 OUT = os.path.join(ROOT, "results")
-N = 3000
+N = 3000  # test flows explained per dataset
 rng = np.random.default_rng(42)
 res = {}
 for ds, loader in LOADERS.items():
     d = loader()
     Xte, yte = d["X_test"], d["y_test"]
+    # Explain a random sample of 3,000 held-out test flows.
     idx = rng.choice(len(yte), min(N, len(yte)), replace=False)
     X, y = Xte.iloc[idx], yte[idx]
     bx = joblib.load(f"{OUT}/models/{ds}_XGBoost.joblib")
     bl = joblib.load(f"{OUT}/models/{ds}_LightGBM.joblib")
+    # Exact TreeSHAP values: one contribution per feature per flow (last column = base value, dropped).
     sx = bx["model"].get_booster().predict(xgb.DMatrix(X), pred_contribs=True)[:, :-1]
     sl = bl["model"].booster_.predict(X, pred_contrib=True)[:, :-1]
     cols = list(X.columns)
+    # Global importance = mean absolute SHAP value of each feature.
     gx = pd.Series(np.abs(sx).mean(0), index=cols).sort_values(ascending=False)
     gl = pd.Series(np.abs(sl).mean(0), index=cols).sort_values(ascending=False)
     # bootstrap stability of the global ranking
@@ -36,8 +39,8 @@ for ds, loader in LOADERS.items():
     base = np.abs(sx).mean(0)
     for b in range(5):
         j = rng.choice(len(y), len(y), replace=True)
-        boots.append(spearmanr(base, np.abs(sx[j]).mean(0)).statistic)
-    top10x, top10l = list(gx.index[:10]), list(gl.index[:10])
+        boots.append(spearmanr(base, np.abs(sx[j]).mean(0)).statistic)  # 1.0 = identical ranking on the resample
+    top10x, top10l = list(gx.index[:10]), list(gl.index[:10])  # used to compare XGBoost and LightGBM explanations
     # local explanation: highest-confidence correctly detected attack
     p = bx["model"].predict_proba(X)[:, 1]
     tp = np.where((y == 1) & (p >= 0.5))[0]
@@ -58,9 +61,11 @@ for ds, loader in LOADERS.items():
                    local_example=dict(index=int(idx[k]), family=str(fam.iloc[k]), prob=float(p[k]),
                                       contributions=local.round(4).to_dict()),
                    per_family_top3=per_family,
+                   # Largest gap between the sum of SHAP values and the model output (should be ~0).
                    additivity_max_err=float(np.max(np.abs(
                        bx["model"].get_booster().predict(xgb.DMatrix(X), pred_contribs=True).sum(1)
                        - bx["model"].get_booster().predict(xgb.DMatrix(X), output_margin=True)))))
+    # Keep the raw SHAP values for the figures.
     np.save(f"{OUT}/{ds}_shap_xgb.npy", sx)
     np.save(f"{OUT}/{ds}_shap_idx.npy", idx)
     print(ds, "top5", top10x[:5], "boot", np.round(boots, 3), "overlap", res[ds]["top10_overlap_xgb_lgbm"], flush=True)

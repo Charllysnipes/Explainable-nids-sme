@@ -6,6 +6,7 @@ os.environ.setdefault("NIDS_DATASET", "CIC-IDS2017")
 import test_pipeline as T
 import test_ui as U
 
+# One-line purpose of each test, written into results/unit_tests.json (Table 5).
 PURPOSE = {
     "test_no_identifier_columns": "IPs, ports, IDs and timestamps removed",
     "test_no_missing_or_infinite_values": "No NaN/Inf in any split",
@@ -38,6 +39,7 @@ PURPOSE = {
 }
 
 
+# Test result collector that also remembers each test's outcome (Pass, Fail, Error or Skipped).
 class Rec(unittest.TextTestResult):
     def __init__(self, *a, **k):
         super().__init__(*a, **k); self.rows = []
@@ -47,11 +49,13 @@ class Rec(unittest.TextTestResult):
     def addSkip(self, t, r): super().addSkip(t, r); self.rows.append((t, "Skipped"))
 
 
+# Run the 21 pipeline, model and API tests and the 7 browser tests together.
 suite = unittest.TestSuite([unittest.defaultTestLoader.loadTestsFromModule(T),
                             unittest.defaultTestLoader.loadTestsFromModule(U)])
 runner = unittest.TextTestRunner(verbosity=2, resultclass=Rec)
 res = runner.run(suite)
 cases = [dict(name=getattr(t, "_testMethodName", str(t)), purpose=PURPOSE.get(getattr(t, "_testMethodName", ""), ""), result=r) for t, r in res.rows]
 out = dict(total=res.testsRun, passed=sum(c["result"] == "Pass" for c in cases), cases=cases)
+# Save the results; the last line printed reads "TESTS 28 / 28" when everything passes.
 json.dump(out, open(os.path.join(ROOT, "results/unit_tests.json"), "w"), indent=1)
 print("TESTS", out["passed"], "/", out["total"])

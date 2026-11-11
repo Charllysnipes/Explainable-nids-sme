@@ -2,9 +2,11 @@
 // Front end: upload a CSV of raw CICFlowMeter flows; the core engine pre-processes, scores and explains them;
 // the run and its predictions are stored in the back-end database.
 require 'inc/db.php'; require 'inc/layout.php';
+// Upload limits, stated on the page and checked before anything is sent to the engine.
 const MAX_BYTES = 5 * 1024 * 1024; const MAX_ROWS = 5000;
 $error = null; $result = null; $runId = null; $fname = null; $labels = [];
 
+// Reads the uploaded CSV. Returns its rows, or null with a clear message if the file is malformed.
 function read_csv_rows(string $path, ?string &$err): ?array {
     $fh = fopen($path, 'r');
     $head = fgetcsv($fh, 0, ',', '"', '');
@@ -20,6 +22,7 @@ function read_csv_rows(string $path, ?string &$err): ?array {
     return $rows;
 }
 
+// Form submitted: run the cheap checks first (file chosen, upload ok, size, .csv), in that order.
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['use_sample'])) { $path = __DIR__ . '/sample_flows.csv'; $fname = 'sample_flows.csv'; }
     elseif (!isset($_FILES['flows']) || $_FILES['flows']['error'] === UPLOAD_ERR_NO_FILE) { $error = 'Please choose a CSV file to upload, or use the sample file.'; }
@@ -31,9 +34,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $rows = read_csv_rows($path, $error);
         if ($rows) {
             foreach ($rows as $r) { $labels[] = $r['Label'] ?? null; }
+            // Send the rows to the engine, which scales, scores and explains every flow.
             $result = api_post('/predict_raw', ['flows' => $rows], $error);
         }
     }
+    // Success: store the run and every prediction. Prepared statements prevent SQL injection,
+    // and the transaction saves all rows or none.
     if ($result) {
         $db = db(); $res = $result['results']; $nAlert = count(array_filter($res, fn($r) => $r['alert']));
         $db->prepare("INSERT INTO analysis_run (created_at, filename, n_flows, n_alerts, n_invalid, model, server_ms) VALUES (?,?,?,?,?,?,?)")

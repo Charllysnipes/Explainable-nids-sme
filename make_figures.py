@@ -23,6 +23,7 @@ main = {d: J(f"{d}_main.json") for d in DS}
 
 
 def save(fig, name):
+    """Save a figure as a PNG in figs/ with a white background."""
     fig.savefig(f"{FIG}/{name}.png", bbox_inches="tight", facecolor="white"); plt.close(fig)
 
 
@@ -77,6 +78,7 @@ def generalisation():
 
 
 def abbr(n):
+    """Short display name of a model for chart labels."""
     r = n
     for a, b in [("Init_Win_bytes_forward", "Init win fwd"), ("Init_Win_bytes_backward", "Init win bwd"),
                  ("Packet Length", "Pkt len"), ("Header Length", "Hdr len"), ("dst_host_", "dh_"),
@@ -171,6 +173,7 @@ def f1_fpr():
 
 
 def family_heatmap():
+    """Supporting figure 20: detection rate per attack family for every model and dataset."""
     fig, axs = plt.subplots(1, 3, figsize=(7.2, 2.8), gridspec_kw={"width_ratios": [7, 10, 5]})
     for ax, d in zip(axs, DS):
         fams = sorted(main[d]["models"]["XGBoost"]["family_detection"].keys())

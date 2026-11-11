@@ -1,4 +1,5 @@
-<?php require 'inc/db.php'; require 'inc/layout.php'; page_start('Help', 'help.php'); ?>
+<?php // Help page: plain-language guide to the tool, its numbers and its limits.
+require 'inc/db.php'; require 'inc/layout.php'; page_start('Help', 'help.php'); ?>
 <div class="card full"><h1>Help</h1>
 <h3>What does this tool do?</h3><p>It checks network flows for signs of attack and explains every decision, so staff without security training can decide what to do.</p>
 <h3>How do I analyse traffic?</h3><ol><li>Export flows with CICFlowMeter as a .csv file.</li><li>Open <a href="analyse.php">Analyse traffic</a>, choose the file and press <em>Analyse file</em> (or try the sample file).</li><li>Review suspicious flows first; the "Why" column lists the features that drove each decision.</li></ol>

@@ -1,4 +1,5 @@
 <?php
+// Past analyses: lists the 20 most recent uploaded files and their results from the database.
 require 'inc/db.php'; require 'inc/layout.php';
 $runs = db()->query("SELECT * FROM analysis_run ORDER BY id DESC LIMIT 20")->fetchAll(PDO::FETCH_ASSOC);
 page_start('Past analyses', 'history.php'); ?>

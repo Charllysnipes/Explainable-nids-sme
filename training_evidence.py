@@ -24,6 +24,7 @@ plt.rcParams.update({"font.family": "serif", "font.serif": ["Liberation Serif"],
                      "axes.spines.right": False, "axes.grid": True, "grid.color": "#e4e3df", "savefig.dpi": 250})
 log = open(f"{RES}/training_log.txt", "w")
 def L(msg):
+    """Print a time-stamped line and append it to results/training_log.txt."""
     line = f"{datetime.datetime.now():%Y-%m-%d %H:%M:%S} | {msg}"
     print(line, flush=True); log.write(line + "\n"); log.flush()
 
@@ -81,6 +82,7 @@ for ds in DS:
 json.dump(dict(curves=curves, cms=cms), open(f"{RES}/training_evidence.json", "w"))
 
 # ---------------- figures
+# Figure 15: training and validation loss per round (XGBoost, LightGBM) and the MLP loss curve.
 fig, axs = plt.subplots(3, 3, figsize=(7.2, 6.0))
 for i, ds in enumerate(DS):
     for j, (name, key) in enumerate([("XGBoost", "logloss"), ("LightGBM", "logloss"), ("MLP", "loss")]):
@@ -97,6 +99,7 @@ for i, ds in enumerate(DS):
         if i == 0 and j < 2: ax.legend(fontsize=6, frameon=False)
 fig.tight_layout(); fig.savefig(f"{FIG}/training_curves.png", facecolor="white"); plt.close(fig)
 
+# Figure 18: ROC curves of all six models on each test set.
 fig, axs = plt.subplots(1, 3, figsize=(7.2, 2.3))
 for ax, ds in zip(axs, DS):
     for name in MODEL_ORDER:
@@ -106,6 +109,7 @@ for ax, ds in zip(axs, DS):
 axs[0].set_ylabel("True positive rate", fontsize=7); axs[2].legend(fontsize=6, frameon=False, loc="lower right")
 fig.tight_layout(); fig.savefig(f"{FIG}/roc_curves.png", facecolor="white"); plt.close(fig)
 
+# Figure 17: confusion matrices (B = benign, A = attack), shaded by row percentage.
 fig, axs = plt.subplots(3, 6, figsize=(7.4, 4.0))
 for i, ds in enumerate(DS):
     for j, name in enumerate(MODEL_ORDER):
@@ -120,6 +124,7 @@ for i, ds in enumerate(DS):
         if i == 2: ax.set_xlabel("predicted", fontsize=6.5)
 fig.tight_layout(); fig.savefig(f"{FIG}/confusion_matrices.png", facecolor="white"); plt.close(fig)
 
+# Figure 16: Random Forest F1 as trees are added, and the Isolation Forest threshold search.
 fig, axs = plt.subplots(1, 2, figsize=(7.0, 2.2))
 for ds in DS:
     k, f = zip(*curves[ds]["RandomForest"]); axs[0].plot(k, f, marker="o", ms=2.5, lw=1.1, label=ds)
@@ -131,6 +136,7 @@ axs[1].set_title("Isolation Forest: threshold selection", fontsize=8)
 for ax in axs: ax.tick_params(labelsize=6); ax.legend(fontsize=6, frameon=False)
 fig.tight_layout(); fig.savefig(f"{FIG}/rf_if_tuning.png", facecolor="white"); plt.close(fig)
 
+# Table 15: list of saved model files and their sizes.
 inv = []
 for f in sorted(os.listdir(f"{RES}/models")):
     inv.append((f, os.path.getsize(f"{RES}/models/{f}") / 1e6))

@@ -1,5 +1,8 @@
 <?php
+// Model performance: shows the held-out test results of all six models on each dataset,
+// read from the same result files used in the paper (deploy/dashboard/data/*.json).
 require 'inc/db.php'; require 'inc/layout.php';
+// Friendly display names for the models.
 $names = ['NaiveBayes' => 'Naive Bayes', 'RandomForest' => 'Random Forest', 'XGBoost' => 'XGBoost (deployed)', 'LightGBM' => 'LightGBM', 'MLP' => 'MLP', 'IsolationForest' => 'Isolation Forest'];
 page_start('Model performance', 'performance.php'); ?>
 <div class="card full"><h1>How well do the models detect attacks?</h1><p class="hint">Held-out test results. F1 balances missed attacks against false alarms; the false-alarm rate is the share of benign traffic wrongly flagged.</p></div>

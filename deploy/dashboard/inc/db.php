@@ -3,6 +3,7 @@
 //   NIDS_DSN="mysql:host=localhost;dbname=nids;charset=utf8mb4" NIDS_DB_USER=... NIDS_DB_PASS=...
 // and load schema.sql once. No other code changes are needed.
 date_default_timezone_set('Europe/London');
+// Returns one shared database connection, creating the tables on first use.
 function db(): PDO {
     static $pdo = null;
     if ($pdo) return $pdo;
@@ -20,8 +21,11 @@ function db(): PDO {
     }
     return $pdo;
 }
+// Escapes text before it is shown, so HTML or script in a file name is displayed, never run (XSS protection).
 function h($s) { return htmlspecialchars((string)$s, ENT_QUOTES); }
+// Address of the Python core engine (deploy/api.py).
 const API = 'http://127.0.0.1:5005';
+// Sends JSON to the core engine and returns its reply. On failure, $err holds a plain-language message.
 function api_post(string $path, array $payload, ?string &$err): ?array {
     $ch = curl_init(API . $path);
     curl_setopt_array($ch, [CURLOPT_POST => true, CURLOPT_RETURNTRANSFER => true, CURLOPT_TIMEOUT => 60,

@@ -21,12 +21,14 @@ except ImportError:  # reported as an error, not silently skipped
 
 
 def _port_open(port):
+    """True if something is already listening on this local port."""
     with socket.socket() as s:
         s.settimeout(0.5)
         return s.connect_ex(("127.0.0.1", port)) == 0
 
 
 def _wait(port, seconds=90):
+    """Wait until a server starts listening on the port (False after the time limit)."""
     end = time.time() + seconds
     while time.time() < end:
         if _port_open(port):
@@ -38,6 +40,7 @@ def _wait(port, seconds=90):
 class TestDashboardUI(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
+        """Start the core engine and a PHP server with a temporary database, then open Chromium."""
         if sync_playwright is None:
             raise RuntimeError("Playwright is not installed: pip install playwright && playwright install chromium")
         env = dict(os.environ, NO_PROXY="127.0.0.1,localhost", no_proxy="127.0.0.1,localhost",
@@ -63,6 +66,7 @@ class TestDashboardUI(unittest.TestCase):
 
     @classmethod
     def tearDownClass(cls):
+        """Close the browser and stop the servers started for the tests."""
         for name in ("browser", "pw"):
             obj = getattr(cls, name, None)
             if obj is not None:
@@ -72,6 +76,7 @@ class TestDashboardUI(unittest.TestCase):
             p.wait(timeout=10)
 
     def setUp(self):
+        """A fresh browser tab for every test."""
         self.page = self.browser.new_page()
 
     def tearDown(self):
@@ -84,6 +89,7 @@ class TestDashboardUI(unittest.TestCase):
             return con.execute("SELECT COUNT(*) FROM analysis_run").fetchone()[0]
 
     def upload(self, files):
+        """Open the Analyse page, attach a file (or nothing) and press Analyse file."""
         self.page.goto(BASE + "/analyse.php")
         if files is not None:
             self.page.set_input_files("#flows", files)
@@ -91,10 +97,12 @@ class TestDashboardUI(unittest.TestCase):
         self.page.wait_for_load_state("load")
 
     def alert_text(self):
+        """Text of the error message box (role=alert) on the page."""
         return self.page.locator("[role=alert]").inner_text()
 
     # UI-1
     def test_ui_navigation_present_on_every_page(self):
+        """UI-1: all five navigation links appear, in order, on every page."""
         for name in PAGES:
             self.page.goto(f"{BASE}/{name}")
             links = self.page.locator("header nav a")
@@ -103,6 +111,7 @@ class TestDashboardUI(unittest.TestCase):
 
     # UI-2
     def test_ui_sample_upload_shows_results_and_saves_run(self):
+        """UI-2: uploading the sample file shows a results table, stores the run and takes under 10 s."""
         before = self.runs()
         t0 = time.perf_counter()
         self.upload(os.path.join(DASH, "sample_flows.csv"))
@@ -114,6 +123,7 @@ class TestDashboardUI(unittest.TestCase):
 
     # UI-3
     def test_ui_no_file_error(self):
+        """UI-3: pressing Analyse with no file gives a clear message and stores nothing."""
         before = self.runs()
         self.upload(None)
         self.assertIn("Please choose a CSV file", self.alert_text())
@@ -121,6 +131,7 @@ class TestDashboardUI(unittest.TestCase):
 
     # UI-4
     def test_ui_wrong_file_type_error(self):
+        """UI-4: a non-CSV file gives a clear message and stores nothing."""
         before = self.runs()
         self.upload({"name": "notes.txt", "mimeType": "text/plain", "buffer": b"not a flow file"})
         self.assertIn("Only .csv files", self.alert_text())
@@ -128,6 +139,7 @@ class TestDashboardUI(unittest.TestCase):
 
     # UI-5
     def test_ui_missing_columns_error_names_columns(self):
+        """UI-5: a file with missing columns gets a message that names them, and nothing is stored."""
         before = self.runs()
         self.upload(os.path.join(DASH, "sample_invalid_missing_columns.csv"))
         self.assertIn("Flow Duration", self.alert_text())
@@ -135,6 +147,7 @@ class TestDashboardUI(unittest.TestCase):
 
     # UI-6
     def test_ui_history_lists_stored_runs(self):
+        """UI-6: the Past analyses page lists a run that was just stored."""
         self.upload(os.path.join(DASH, "sample_flows.csv"))
         with sqlite3.connect(self.db_path) as con:
             run_id, fname = con.execute("SELECT id, filename FROM analysis_run ORDER BY id DESC LIMIT 1").fetchone()
@@ -145,6 +158,7 @@ class TestDashboardUI(unittest.TestCase):
 
     # UI-7
     def test_ui_output_is_html_escaped(self):
+        """UI-7: HTML in a file name is shown as text and never run (script-injection check)."""
         with open(os.path.join(DASH, "sample_flows.csv"), "rb") as f:
             data = f.read()
         evil = "<img id=xss src=x>.csv"  # no "/" because PHP basename() would cut the name there

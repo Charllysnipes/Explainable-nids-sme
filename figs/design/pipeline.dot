@@ -1,0 +1,12 @@
+digraph P { rankdir=TB; bgcolor=white; nodesep=0.25; ranksep=0.28;
+ node[shape=box, style="rounded,filled", fontname="Liberation Sans", fontsize=10.5, color="#3b4a5a", penwidth=1.1, width=5.6];
+ edge[color="#3b4a5a", arrowsize=0.7];
+ s1[label=<<b>1. Data sources</b> (CSV, research licence, cite source papers)<br/>CIC-IDS2017 subset 56,661 flows · UNSW-NB15 175,341 + 82,332 · NSL-KDD 125,973 + 22,544>, fillcolor="#e8eef6"];
+ s2[label=<<b>2. Ingestion</b>: pandas.read_csv · strip column names · align UNSW copies by row (100% match)>, fillcolor="#e8eef6"];
+ s3[label=<<b>3. Cleaning</b>: drop identifiers (IPs, ports, IDs, time) · drop NaN/Inf · drop duplicates<br/>(features + binary label) · keep official test partitions intact>, fillcolor="#fff4e0"];
+ s4[label=<<b>4. Transformation</b>: one-hot encode protocol / service / state / flag · drop constant columns<br/>Min-Max scaling fitted on training split only · clip to [−1, 2]>, fillcolor="#fff4e0"];
+ s5[label=<<b>5. Splitting</b>: CIC 70/15/15 stratified · UNSW and NSL: official train/test, 15% of train → validation>, fillcolor="#fff4e0"];
+ s6[label=<<b>6. Storage</b>: model store (joblib: model, scaler, columns, threshold) · results (JSON)<br/>run-time database: analysis_run, prediction, flows (SQLite / MySQL)>, fillcolor="#e9f5ec"];
+ s7[label=<<b>7. Model</b>: tuning on validation · training · held-out testing · TreeSHAP · REST API>, fillcolor="#f3e9f6"];
+ s1->s2->s3->s4->s5->s6->s7;
+}

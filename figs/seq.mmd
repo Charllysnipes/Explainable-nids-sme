@@ -1,0 +1,21 @@
+sequenceDiagram
+    participant R as Traffic replay client
+    participant A as Flask REST API
+    participant M as XGBoost model
+    participant S as TreeSHAP
+    participant D as SQLite / MySQL
+    participant P as PHP dashboard
+    participant U as SME analyst
+    R->>A: POST /predict {flows:[...]}
+    A->>A: align columns, fill missing features
+    A->>M: predict probability
+    M-->>A: p(attack)
+    A->>S: pred_contribs (SHAP values)
+    S-->>A: per-feature contributions
+    A-->>R: probability, alert flag, top-3 reasons
+    R->>D: INSERT scored flow
+    loop every 5 s
+        P->>D: SELECT KPIs, recent alerts
+        D-->>P: rows
+        P-->>U: alerts with explanations
+    end

@@ -1,0 +1,10 @@
+{
+ "dataset": "CIC-IDS2017",
+ "n_stream": 1500,
+ "api_latency_ms_median": 9.441708000167637,
+ "api_latency_ms_p95": 17.336599250006657,
+ "api_batch1000_seconds": 0.43863723699996626,
+ "api_batch_throughput_flows_per_s": 2279.788206855035,
+ "alerts_raised": 785,
+ "alerts_true": 783
+}

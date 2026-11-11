@@ -1,0 +1,98 @@
+{
+ "CIC-IDS2017": {
+  "NaiveBayes": {
+   "latency_ms_median": 1.1135610002384055,
+   "latency_ms_p95": 2.20585765002852,
+   "throughput_flows_per_s": 1590066.1656892716
+  },
+  "RandomForest": {
+   "latency_ms_median": 7.515290000128516,
+   "latency_ms_p95": 11.66481755001314,
+   "throughput_flows_per_s": 159832.83522233635
+  },
+  "XGBoost": {
+   "latency_ms_median": 2.911524999944959,
+   "latency_ms_p95": 3.50239560023056,
+   "throughput_flows_per_s": 117533.97740574012
+  },
+  "LightGBM": {
+   "latency_ms_median": 0.715221000064048,
+   "latency_ms_p95": 0.800632850268812,
+   "throughput_flows_per_s": 35347.34842061262
+  },
+  "MLP": {
+   "latency_ms_median": 0.9723250000206463,
+   "latency_ms_p95": 1.3882910997836007,
+   "throughput_flows_per_s": 865906.053297631
+  },
+  "IsolationForest": {
+   "latency_ms_median": 8.870066500094254,
+   "latency_ms_p95": 16.862231200093447,
+   "throughput_flows_per_s": 136598.58886784545
+  }
+ },
+ "UNSW-NB15": {
+  "NaiveBayes": {
+   "latency_ms_median": 1.0402620000604657,
+   "latency_ms_p95": 1.4946977000363406,
+   "throughput_flows_per_s": 1806995.926550406
+  },
+  "RandomForest": {
+   "latency_ms_median": 7.257170999992013,
+   "latency_ms_p95": 9.222554500070148,
+   "throughput_flows_per_s": 156942.27287412644
+  },
+  "XGBoost": {
+   "latency_ms_median": 3.2049885001015355,
+   "latency_ms_p95": 5.280142700371472,
+   "throughput_flows_per_s": 98165.71766960512
+  },
+  "LightGBM": {
+   "latency_ms_median": 0.7292355001027317,
+   "latency_ms_p95": 1.1272512002733495,
+   "throughput_flows_per_s": 106649.17819801523
+  },
+  "MLP": {
+   "latency_ms_median": 0.8976745000381925,
+   "latency_ms_p95": 1.0685736497634934,
+   "throughput_flows_per_s": 660840.4689670831
+  },
+  "IsolationForest": {
+   "latency_ms_median": 8.256354499962981,
+   "latency_ms_p95": 12.343638199990894,
+   "throughput_flows_per_s": 156341.37959436912
+  }
+ },
+ "NSL-KDD": {
+  "NaiveBayes": {
+   "latency_ms_median": 1.5030330002900882,
+   "latency_ms_p95": 2.2712928000373727,
+   "throughput_flows_per_s": 1327366.0738755388
+  },
+  "RandomForest": {
+   "latency_ms_median": 8.095428499927948,
+   "latency_ms_p95": 11.228527049661352,
+   "throughput_flows_per_s": 187674.61766641936
+  },
+  "XGBoost": {
+   "latency_ms_median": 5.167478500197831,
+   "latency_ms_p95": 6.802094299700912,
+   "throughput_flows_per_s": 139123.79949568314
+  },
+  "LightGBM": {
+   "latency_ms_median": 0.8362495000255876,
+   "latency_ms_p95": 1.070331300206817,
+   "throughput_flows_per_s": 29482.239434181658
+  },
+  "MLP": {
+   "latency_ms_median": 1.239702499788109,
+   "latency_ms_p95": 1.7124932499427818,
+   "throughput_flows_per_s": 496567.9345060719
+  },
+  "IsolationForest": {
+   "latency_ms_median": 15.547322000202257,
+   "latency_ms_p95": 26.605356200025202,
+   "throughput_flows_per_s": 54004.099899099056
+  }
+ }
+}

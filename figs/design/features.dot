@@ -1,0 +1,9 @@
+digraph F { rankdir=LR; bgcolor=white; nodesep=0.3; ranksep=0.55;
+ node[shape=box, style="rounded,filled", fontname="Liberation Sans", fontsize=10, color="#3b4a5a", penwidth=1.1];
+ edge[color="#3b4a5a", arrowsize=0.7, fontname="Liberation Sans", fontsize=9];
+ r[label=<<b>Raw features</b><br/><br/>CIC-IDS2017: 77 numeric<br/>CICFlowMeter features<br/><br/>UNSW-NB15: 39 numeric<br/>+ proto, service, state<br/><br/>NSL-KDD: 38 numeric<br/>+ protocol, service, flag>, fillcolor="#e8eef6"];
+ e[label=<<b>Engineered features</b><br/><br/>one-hot categories<br/>(e.g. service_dns, flag_S0)<br/><br/>identifiers removed<br/><br/>7 harmonised log-flow<br/>features for the<br/>cross-network test>, fillcolor="#fff4e0"];
+ s[label=<<b>Selected features</b><br/><br/>constant columns dropped<br/>CIC 67 · UNSW 69 · NSL 121<br/><br/>correlation analysis<br/>(|r| ≥ 0.95) and RF<br/>importance ranking<br/>evaluated on validation>, fillcolor="#e9f5ec"];
+ m[label=<<b>Model input</b><br/><br/>Min-Max scaled vector<br/>x ∈ [0,1]<sup>d</sup><br/><br/>→ 6 models<br/>→ TreeSHAP reasons>, fillcolor="#f3e9f6"];
+ r->e[label="encode,\nremove IDs"]; e->s[label="filter,\nrank"]; s->m[label="scale\n(train-only fit)"];
+}

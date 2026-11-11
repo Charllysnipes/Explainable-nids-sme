@@ -1,0 +1,17 @@
+flowchart LR
+    S([Analyst opens Analyse traffic]) --> C{File chosen or<br/>sample selected?}
+    C -- yes --> T{.csv and ≤ 5 MB?}
+    T -- yes --> P[Parse header and rows]
+    P --> R{Header present, rows consistent,<br/>≤ 5,000 rows?}
+    R -- yes --> A[Send flows to /predict_raw]
+    A --> K{All 67 required<br/>columns present?}
+    K -- yes --> V[Coerce values, flag invalid rows]
+    V --> X[Scale → predict → TreeSHAP]
+    X --> D[(Store run and predictions)]
+    D --> O[/Show KPIs and alerts with reasons/]
+    O --> Z([End])
+    C -- no --> E[/Show specific, plain-language error;<br/>keep the form so the user can retry/]
+    T -- no --> E
+    R -- no --> E
+    K -- no --> E
+    E --> Z2([End: user corrects file])

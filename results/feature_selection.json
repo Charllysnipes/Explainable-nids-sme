@@ -1,0 +1,281 @@
+{
+ "CIC-IDS2017": {
+  "n_features": 67,
+  "n_corr_pairs": 70,
+  "n_redundant": 24,
+  "top10_rf_importance": {
+   "Bwd Packet Length Std": 0.1214,
+   "Packet Length Std": 0.1018,
+   "Packet Length Variance": 0.0751,
+   "Avg Bwd Segment Size": 0.0736,
+   "Bwd Packet Length Mean": 0.0732,
+   "Fwd Header Length": 0.0443,
+   "Fwd IAT Std": 0.0377,
+   "Init_Win_bytes_forward": 0.0373,
+   "Fwd Header Length.1": 0.0369,
+   "Init_Win_bytes_backward": 0.0303
+  },
+  "subsets": [
+   {
+    "subset": "top-5",
+    "n_features": 5,
+    "val_f1": 0.9127237408075483,
+    "fit_seconds": 0.605423763000033
+   },
+   {
+    "subset": "top-10",
+    "n_features": 10,
+    "val_f1": 0.9956838815299895,
+    "fit_seconds": 0.8213134259999606
+   },
+   {
+    "subset": "top-20",
+    "n_features": 20,
+    "val_f1": 0.9959827406635917,
+    "fit_seconds": 1.5555655910000041
+   },
+   {
+    "subset": "top-30",
+    "n_features": 30,
+    "val_f1": 0.9973166368515206,
+    "fit_seconds": 1.8458646329999624
+   },
+   {
+    "subset": "top-40",
+    "n_features": 40,
+    "val_f1": 0.9964168408480143,
+    "fit_seconds": 2.353717911999979
+   },
+   {
+    "subset": "all",
+    "n_features": 67,
+    "val_f1": 0.9973158365642708,
+    "fit_seconds": 4.755101697999976
+   },
+   {
+    "subset": "all minus correlated",
+    "n_features": 43,
+    "val_f1": 0.9974645786726324,
+    "fit_seconds": 2.4911239190000174
+   }
+  ],
+  "example_pairs": [
+   [
+    "Total Fwd Packets",
+    "Subflow Fwd Packets",
+    1.0
+   ],
+   [
+    "Total Backward Packets",
+    "Subflow Bwd Packets",
+    1.0
+   ],
+   [
+    "Total Length of Fwd Packets",
+    "Subflow Fwd Bytes",
+    1.0
+   ],
+   [
+    "Fwd Packet Length Mean",
+    "Avg Fwd Segment Size",
+    1.0
+   ],
+   [
+    "Bwd Packet Length Mean",
+    "Avg Bwd Segment Size",
+    1.0
+   ],
+   [
+    "Fwd PSH Flags",
+    "SYN Flag Count",
+    1.0
+   ]
+  ]
+ },
+ "UNSW-NB15": {
+  "n_features": 69,
+  "n_corr_pairs": 14,
+  "n_redundant": 9,
+  "top10_rf_importance": {
+   "sttl": 0.2582,
+   "ct_state_ttl": 0.1417,
+   "dload": 0.0715,
+   "ackdat": 0.0628,
+   "ct_srv_dst": 0.0381,
+   "dttl": 0.0376,
+   "tcprtt": 0.0342,
+   "ct_dst_src_ltm": 0.0292,
+   "synack": 0.029,
+   "sbytes": 0.0241
+  },
+  "subsets": [
+   {
+    "subset": "top-5",
+    "n_features": 5,
+    "val_f1": 0.8999616711383672,
+    "fit_seconds": 2.0117364489999545
+   },
+   {
+    "subset": "top-10",
+    "n_features": 10,
+    "val_f1": 0.9245880026367831,
+    "fit_seconds": 3.520366905000003
+   },
+   {
+    "subset": "top-20",
+    "n_features": 20,
+    "val_f1": 0.9307651575324332,
+    "fit_seconds": 4.110203148000039
+   },
+   {
+    "subset": "top-30",
+    "n_features": 30,
+    "val_f1": 0.9323777291127481,
+    "fit_seconds": 6.860335402999965
+   },
+   {
+    "subset": "top-40",
+    "n_features": 40,
+    "val_f1": 0.9328288862339041,
+    "fit_seconds": 6.057490580000035
+   },
+   {
+    "subset": "all",
+    "n_features": 69,
+    "val_f1": 0.9336341916644545,
+    "fit_seconds": 9.744399181000006
+   },
+   {
+    "subset": "all minus correlated",
+    "n_features": 60,
+    "val_f1": 0.9321854304635762,
+    "fit_seconds": 6.66084502800004
+   }
+  ],
+  "example_pairs": [
+   [
+    "is_ftp_login",
+    "ct_ftp_cmd",
+    1.0
+   ],
+   [
+    "proto_icmp",
+    "state_999",
+    1.0
+   ],
+   [
+    "swin",
+    "proto_tcp",
+    1.0
+   ],
+   [
+    "sbytes",
+    "sloss",
+    0.997
+   ],
+   [
+    "dbytes",
+    "dloss",
+    0.996
+   ],
+   [
+    "swin",
+    "dwin",
+    0.984
+   ]
+  ]
+ },
+ "NSL-KDD": {
+  "n_features": 121,
+  "n_corr_pairs": 14,
+  "n_redundant": 7,
+  "top10_rf_importance": {
+   "flag_SF": 0.1954,
+   "same_srv_rate": 0.1537,
+   "dst_host_srv_count": 0.0683,
+   "protocol_type_icmp": 0.0636,
+   "diff_srv_rate": 0.0611,
+   "logged_in": 0.0492,
+   "dst_host_same_srv_rate": 0.0417,
+   "service_private": 0.0345,
+   "dst_host_same_src_port_rate": 0.0338,
+   "count": 0.0288
+  },
+  "subsets": [
+   {
+    "subset": "top-5",
+    "n_features": 5,
+    "val_f1": 0.9595510872106616,
+    "fit_seconds": 2.148727545999975
+   },
+   {
+    "subset": "top-10",
+    "n_features": 10,
+    "val_f1": 0.9829172141918529,
+    "fit_seconds": 2.974264926999979
+   },
+   {
+    "subset": "top-20",
+    "n_features": 20,
+    "val_f1": 0.9985208783706906,
+    "fit_seconds": 2.7556073760000004
+   },
+   {
+    "subset": "top-30",
+    "n_features": 30,
+    "val_f1": 0.9989194107945174,
+    "fit_seconds": 3.0720895559999803
+   },
+   {
+    "subset": "top-40",
+    "n_features": 40,
+    "val_f1": 0.9992606494909856,
+    "fit_seconds": 3.6164571090000095
+   },
+   {
+    "subset": "all",
+    "n_features": 121,
+    "val_f1": 0.9993744668751777,
+    "fit_seconds": 7.7611691220000125
+   },
+   {
+    "subset": "all minus correlated",
+    "n_features": 114,
+    "val_f1": 0.9990901853747299,
+    "fit_seconds": 7.08956662199995
+   }
+  ],
+  "example_pairs": [
+   [
+    "num_compromised",
+    "num_root",
+    0.999
+   ],
+   [
+    "serror_rate",
+    "srv_serror_rate",
+    0.993
+   ],
+   [
+    "rerror_rate",
+    "srv_rerror_rate",
+    0.989
+   ],
+   [
+    "srv_serror_rate",
+    "dst_host_srv_serror_rate",
+    0.986
+   ],
+   [
+    "dst_host_serror_rate",
+    "dst_host_srv_serror_rate",
+    0.985
+   ],
+   [
+    "srv_serror_rate",
+    "flag_S0",
+    0.982
+   ]
+  ]
+ }
+}

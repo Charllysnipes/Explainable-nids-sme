@@ -1,0 +1,29 @@
+sequenceDiagram
+    actor U as SME analyst
+    participant B as Browser
+    participant F as analyse.php (front end)
+    participant A as Flask API (core engine)
+    participant M as XGBoost + TreeSHAP
+    participant D as Database (back end)
+    U->>B: choose CSV, click "Analyse file"
+    B->>F: POST multipart/form-data
+    F->>F: check file present, .csv, ≤ 5 MB, ≤ 5,000 rows, header
+    alt file invalid
+        F-->>B: page with plain-language error message
+    else file valid
+        F->>A: POST /predict_raw {flows: [...]}
+        A->>A: check required columns, coerce values, flag invalid rows
+        alt columns missing
+            A-->>F: 400 {error: "...columns missing..."}
+            F-->>B: error message
+        else
+            A->>A: Min-Max scaling (training scaler)
+            A->>M: predict + pred_contribs
+            M-->>A: probabilities, SHAP values
+            A-->>F: 200 {results, n_invalid_rows, server_ms}
+            F->>D: INSERT analysis_run, INSERT predictions (transaction)
+            D-->>F: run id
+            F-->>B: KPIs + alerts table with top-3 reasons
+        end
+    end
+    B-->>U: results page

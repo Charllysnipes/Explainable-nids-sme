@@ -1,0 +1,146 @@
+{
+ "total": 28,
+ "passed": 28,
+ "cases": [
+  {
+   "name": "test_api_matches_offline_model",
+   "purpose": "Online and offline predictions agree",
+   "result": "Pass"
+  },
+  {
+   "name": "test_health",
+   "purpose": "API health endpoint responds",
+   "result": "Pass"
+  },
+  {
+   "name": "test_missing_features_are_filled",
+   "purpose": "API tolerates missing fields",
+   "result": "Pass"
+  },
+  {
+   "name": "test_predict_schema",
+   "purpose": "API returns probability, alert flag, 3 reasons",
+   "result": "Pass"
+  },
+  {
+   "name": "test_raw_input_invalid_values_flagged",
+   "purpose": "Non-numeric values are flagged per row",
+   "result": "Pass"
+  },
+  {
+   "name": "test_raw_input_matches_offline_pipeline",
+   "purpose": "Raw CSV path equals offline pre-processing + model",
+   "result": "Pass"
+  },
+  {
+   "name": "test_raw_input_missing_columns_rejected",
+   "purpose": "Missing columns give a clear 400 error",
+   "result": "Pass"
+  },
+  {
+   "name": "test_raw_input_too_many_flows_rejected",
+   "purpose": "Oversized requests are rejected (413)",
+   "result": "Pass"
+  },
+  {
+   "name": "test_shap_values_are_additive",
+   "purpose": "SHAP values sum to model output",
+   "result": "Pass"
+  },
+  {
+   "name": "test_no_constant_features",
+   "purpose": "Constant columns removed",
+   "result": "Pass"
+  },
+  {
+   "name": "test_no_duplicate_rows_in_training",
+   "purpose": "Duplicates removed before splitting",
+   "result": "Pass"
+  },
+  {
+   "name": "test_no_identifier_columns",
+   "purpose": "IPs, ports, IDs and timestamps removed",
+   "result": "Pass"
+  },
+  {
+   "name": "test_no_missing_or_infinite_values",
+   "purpose": "No NaN/Inf in any split",
+   "result": "Pass"
+  },
+  {
+   "name": "test_nslkdd_unseen_attack_records",
+   "purpose": "3,750 unseen-attack test records identified",
+   "result": "Pass"
+  },
+  {
+   "name": "test_same_feature_columns_in_all_splits",
+   "purpose": "Train/val/test share one schema",
+   "result": "Pass"
+  },
+  {
+   "name": "test_scaler_fitted_on_training_only",
+   "purpose": "Min-Max fitted on training data only",
+   "result": "Pass"
+  },
+  {
+   "name": "test_stratified_split_preserves_attack_rate",
+   "purpose": "Stratification keeps class balance",
+   "result": "Pass"
+  },
+  {
+   "name": "test_unsw_official_test_partition_size",
+   "purpose": "Official UNSW-NB15 test partition intact",
+   "result": "Pass"
+  },
+  {
+   "name": "test_all_models_build",
+   "purpose": "All six model factories construct",
+   "result": "Pass"
+  },
+  {
+   "name": "test_saved_models_meet_minimum_quality",
+   "purpose": "Regression check: XGBoost F1 > 0.95 (CIC)",
+   "result": "Pass"
+  },
+  {
+   "name": "test_search_space_samples_are_unique",
+   "purpose": "Randomised search has no repeats",
+   "result": "Pass"
+  },
+  {
+   "name": "test_ui_history_lists_stored_runs",
+   "purpose": "History page lists stored runs",
+   "result": "Pass"
+  },
+  {
+   "name": "test_ui_missing_columns_error_names_columns",
+   "purpose": "Missing columns named; nothing stored",
+   "result": "Pass"
+  },
+  {
+   "name": "test_ui_navigation_present_on_every_page",
+   "purpose": "All five navigation links on every page",
+   "result": "Pass"
+  },
+  {
+   "name": "test_ui_no_file_error",
+   "purpose": "Clear message when no file is chosen",
+   "result": "Pass"
+  },
+  {
+   "name": "test_ui_output_is_html_escaped",
+   "purpose": "HTML in input shown as text (XSS check)",
+   "result": "Pass"
+  },
+  {
+   "name": "test_ui_sample_upload_shows_results_and_saves_run",
+   "purpose": "Upload -> results table -> run stored; < 10 s",
+   "result": "Pass"
+  },
+  {
+   "name": "test_ui_wrong_file_type_error",
+   "purpose": "Clear message for a non-CSV file",
+   "result": "Pass"
+  }
+ ]
+}

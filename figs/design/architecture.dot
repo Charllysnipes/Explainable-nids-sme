@@ -1,0 +1,31 @@
+digraph A { rankdir=LR; bgcolor=white; nodesep=0.5; ranksep=0.9;
+ node[shape=plain, fontname="Liberation Sans", fontsize=10.5];
+ edge[color="#3b4a5a", fontname="Liberation Sans", fontsize=9.5, arrowsize=0.75, penwidth=1.2];
+ user[shape=box, style="rounded", label="SME analyst\n(web browser)", color="#3b4a5a"];
+ fe[label=<<table border="1" cellborder="0" cellspacing="0" cellpadding="5" bgcolor="#eef3fa" color="#3b4a5a" style="rounded">
+  <tr><td bgcolor="#2a4d7a"><font color="white"><b>FRONT END</b></font></td></tr>
+  <tr><td><i>PHP 8.3 · HTML/CSS · responsive</i></td></tr>
+  <tr><td align="left">• Live monitor (index.php)</td></tr><tr><td align="left">• Analyse traffic (analyse.php)</td></tr>
+  <tr><td align="left">   upload, validation, error messages</td></tr><tr><td align="left">• Past analyses (history.php)</td></tr>
+  <tr><td align="left">• Model performance (performance.php)</td></tr><tr><td align="left">• Help (help.php)</td></tr></table>>];
+ ce[label=<<table border="1" cellborder="0" cellspacing="0" cellpadding="5" bgcolor="#fff8ec" color="#3b4a5a" style="rounded">
+  <tr><td bgcolor="#a3620b"><font color="white"><b>CORE ENGINE</b></font></td></tr>
+  <tr><td><i>Python 3.13 · Flask REST API</i></td></tr>
+  <tr><td align="left">1. Validate columns and values</td></tr><tr><td align="left">2. Min-Max scaling (training scaler)</td></tr>
+  <tr><td align="left">3. XGBoost probability, threshold 0.5</td></tr><tr><td align="left">4. TreeSHAP top-3 reasons</td></tr>
+  <tr><td align="left">Endpoints: /predict_raw, /predict,</td></tr><tr><td align="left">   /health, /model_info</td></tr></table>>];
+ be[label=<<table border="1" cellborder="0" cellspacing="0" cellpadding="5" bgcolor="#eef7f0" color="#3b4a5a" style="rounded">
+  <tr><td bgcolor="#1f6b45"><font color="white"><b>BACK END</b></font></td></tr>
+  <tr><td><i>PDO · SQLite (prototype) / MySQL 8</i></td></tr>
+  <tr><td align="left">• analysis_run (one row per upload)</td></tr><tr><td align="left">• prediction (one row per flow)</td></tr>
+  <tr><td align="left">• flows (live replay stream)</td></tr><tr><td align="left">• Model store (joblib artefacts)</td></tr>
+  <tr><td align="left">• Results store (JSON metrics)</td></tr></table>>];
+ off[shape=box, style="rounded,dashed", color="#7a8796", label="Offline training pipeline (Python)\ndata_prep → tuning/training → evaluation → TreeSHAP\nsaves models, scaler, threshold and metrics"];
+ rp[shape=box, style="rounded,dashed", color="#7a8796", label="Replay client\n(simulated live traffic)"];
+ user->fe[label="HTTPS", dir=both];
+ fe->ce[label="REST · JSON\n(flows → scores, reasons)", dir=both];
+ fe->be[label="PDO / SQL\n(store runs, read history)", dir=both, constraint=false];
+ ce->be[label="load model + scaler\nat start-up", style=dashed, dir=back];
+ off->be[label="save artefacts", style=dashed]; rp->ce[label="POST /predict", style=dashed]; rp->be[label="INSERT flows", style=dashed];
+ {rank=same; off; rp;}
+}

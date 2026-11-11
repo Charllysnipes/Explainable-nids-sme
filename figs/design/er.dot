@@ -1,0 +1,18 @@
+digraph ER { rankdir=LR; bgcolor=white; nodesep=0.6;
+ node[shape=plain, fontname="Liberation Sans", fontsize=10];
+ run[label=<<table border="1" cellborder="0" cellspacing="0" cellpadding="4" color="#3b4a5a">
+  <tr><td bgcolor="#2a4d7a" colspan="2"><font color="white"><b>analysis_run</b></font></td></tr>
+  <tr><td align="left"><b>PK</b></td><td align="left">id INT</td></tr><tr><td></td><td align="left">created_at DATETIME</td></tr>
+  <tr><td></td><td align="left">filename VARCHAR(255)</td></tr><tr><td></td><td align="left">n_flows INT</td></tr><tr><td></td><td align="left">n_alerts INT</td></tr>
+  <tr><td></td><td align="left">n_invalid INT</td></tr><tr><td></td><td align="left">model VARCHAR(64)</td></tr><tr><td></td><td align="left">server_ms DOUBLE</td></tr></table>>];
+ pred[label=<<table border="1" cellborder="0" cellspacing="0" cellpadding="4" color="#3b4a5a">
+  <tr><td bgcolor="#2a4d7a" colspan="2"><font color="white"><b>prediction</b></font></td></tr>
+  <tr><td align="left"><b>PK</b></td><td align="left">id INT</td></tr><tr><td align="left"><b>FK</b></td><td align="left">run_id INT → analysis_run.id</td></tr>
+  <tr><td></td><td align="left">row_no INT</td></tr><tr><td></td><td align="left">probability DOUBLE</td></tr><tr><td></td><td align="left">alert TINYINT(1)</td></tr>
+  <tr><td></td><td align="left">reason1..3 VARCHAR(64)</td></tr><tr><td></td><td align="left">shap1..3 DOUBLE</td></tr><tr><td></td><td align="left">true_label VARCHAR(32) NULL</td></tr></table>>];
+ flows[label=<<table border="1" cellborder="0" cellspacing="0" cellpadding="4" color="#3b4a5a">
+  <tr><td bgcolor="#1f6b45" colspan="2"><font color="white"><b>flows</b> (live stream)</font></td></tr>
+  <tr><td align="left"><b>PK</b></td><td align="left">id INT</td></tr><tr><td></td><td align="left">ts DOUBLE</td></tr><tr><td></td><td align="left">true_label VARCHAR(32)</td></tr>
+  <tr><td></td><td align="left">prob DOUBLE, alert TINYINT(1)</td></tr><tr><td></td><td align="left">f1..f3 VARCHAR(64), v1..v3 DOUBLE</td></tr><tr><td></td><td align="left">latency_ms DOUBLE</td></tr></table>>];
+ run->pred[arrowhead=crowodot, arrowtail=teetee, dir=both, color="#3b4a5a", label="  1 : 0..*  ", fontname="Liberation Sans", fontsize=9];
+}

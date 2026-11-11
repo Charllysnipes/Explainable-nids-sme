@@ -1,0 +1,13 @@
+digraph G {
+  rankdir=TB; forcelabels=true; ranksep=0.2; bgcolor="white";
+  node [shape=box, style="rounded,filled", fontname="Liberation Serif", fontsize=12, penwidth=1.1, color="#3b4a5a", margin="0.14,0.07", width=4.6];
+  edge [color="#3b4a5a", arrowsize=0.7, penwidth=1.1, fontname="Liberation Serif", fontsize=11];
+  data [label=<<b>1. Data layer</b><br/>CIC-IDS2017  ·  UNSW-NB15  ·  NSL-KDD>, fillcolor="#e8eef6"];
+  prep [label=<<b>2. Pre-processing (leakage-free)</b><br/>drop identifiers, duplicates, NaN/Inf · one-hot encoding<br/>Min-Max scaling fitted on training data only<br/>stratified training / validation / test split>, fillcolor="#e8eef6"];
+  mod [label=<<b>3. Model layer</b> (tuned on validation set)<br/>Naive Bayes baseline · Random Forest · XGBoost<br/>LightGBM · Multi-Layer Perceptron<br/>Isolation Forest (trained on benign traffic only)>, fillcolor="#fff4e0"];
+  ev [label=<<b>4. Evaluation layer</b><br/>P, R, F1, FPR, ROC-AUC, PR-AUC · Friedman/Nemenyi, McNemar<br/>unseen attacks · cross-network · Gaussian noise · latency>, fillcolor="#e9f5ec"];
+  xai [label=<<b>5. Explainability layer</b><br/>TreeSHAP global ranking + per-alert reasons<br/>bootstrap and cross-model stability checks>, fillcolor="#e9f5ec"];
+  dep [label=<<b>6. Deployment layer</b><br/>Flask REST API → SQLite/MySQL → PHP dashboard → SME analyst>, fillcolor="#f3e9f6"];
+  data -> prep -> mod -> ev; ev -> xai [label="  best model"]; xai -> dep;
+  dep -> data [style=dashed, constraint=false, xlabel="analyst feedback / retraining", color="#7a8796", fontcolor="#5b6775"];
+}

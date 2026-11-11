@@ -1,0 +1,22 @@
+2026-10-18 23:52:09 | [CIC-IDS2017] loaded: train=(30830, 67), val=(6606, 67), test=(6607, 67)
+2026-10-18 23:52:13 | [CIC-IDS2017] XGBoost {'colsample_bytree': 0.8, 'learning_rate': 0.1, 'max_depth': 10, 'n_estimators': 400, 'subsample': 1.0} fitted in 4.5s; final logloss train=0.0018 val=0.0086
+2026-10-18 23:52:17 | [CIC-IDS2017] LightGBM {'colsample_bytree': 1.0, 'learning_rate': 0.1, 'n_estimators': 400, 'num_leaves': 63, 'subsample': 1.0, 'subsample_freq': 1} fitted in 4.1s; final logloss train=0.0004 val=0.0124
+2026-10-18 23:52:17 | [CIC-IDS2017] MLP {'alpha': 0.0001, 'batch_size': 256, 'hidden_layer_sizes': [64, 32], 'learning_rate_init': 0.003} stopped after 25 epochs; final train loss=0.0879, best val acc=0.9646
+2026-10-18 23:52:17 | [CIC-IDS2017] RandomForest {'max_depth': 20, 'max_features': 0.3, 'min_samples_leaf': 2, 'n_estimators': 100}: validation F1 with 1 tree=0.9881, all trees=0.9952
+2026-10-18 23:52:18 | [CIC-IDS2017] IsolationForest threshold chosen on validation = 0.3480
+2026-10-18 23:52:18 | [CIC-IDS2017] ROC curves and confusion matrices computed for 6 models
+2026-10-18 23:52:24 | [UNSW-NB15] loaded: train=(86078, 69), val=(15191, 69), test=(82332, 69)
+2026-10-18 23:52:34 | [UNSW-NB15] XGBoost {'colsample_bytree': 0.8, 'learning_rate': 0.05, 'max_depth': 10, 'n_estimators': 400, 'subsample': 0.8} fitted in 9.4s; final logloss train=0.0745 val=0.1430
+2026-10-18 23:52:37 | [UNSW-NB15] LightGBM {'colsample_bytree': 0.8, 'learning_rate': 0.05, 'n_estimators': 200, 'num_leaves': 127, 'subsample': 1.0, 'subsample_freq': 1} fitted in 3.5s; final logloss train=0.0957 val=0.1445
+2026-10-18 23:52:37 | [UNSW-NB15] MLP {'alpha': 0.001, 'batch_size': 256, 'hidden_layer_sizes': [64, 32], 'learning_rate_init': 0.001} stopped after 34 epochs; final train loss=0.1766, best val acc=0.9089
+2026-10-18 23:52:40 | [UNSW-NB15] RandomForest {'max_depth': 30, 'max_features': 0.3, 'min_samples_leaf': 2, 'n_estimators': 100}: validation F1 with 1 tree=0.9084, all trees=0.9304
+2026-10-18 23:52:40 | [UNSW-NB15] IsolationForest threshold chosen on validation = 0.3749
+2026-10-18 23:52:43 | [UNSW-NB15] ROC curves and confusion matrices computed for 6 models
+2026-10-18 23:52:45 | [NSL-KDD] loaded: train=(107077, 121), val=(18896, 121), test=(22544, 121)
+2026-10-18 23:52:54 | [NSL-KDD] XGBoost {'colsample_bytree': 1.0, 'learning_rate': 0.2, 'max_depth': 10, 'n_estimators': 400, 'subsample': 1.0} fitted in 9.5s; final logloss train=0.0002 val=0.0024
+2026-10-18 23:53:00 | [NSL-KDD] LightGBM {'colsample_bytree': 0.8, 'learning_rate': 0.1, 'n_estimators': 400, 'num_leaves': 127, 'subsample': 0.8, 'subsample_freq': 1} fitted in 5.6s; final logloss train=0.0001 val=0.0030
+2026-10-18 23:53:00 | [NSL-KDD] MLP {'alpha': 1e-05, 'batch_size': 256, 'hidden_layer_sizes': [256, 128], 'learning_rate_init': 0.001} stopped after 31 epochs; final train loss=0.0066, best val acc=0.9970
+2026-10-18 23:53:01 | [NSL-KDD] RandomForest {'max_depth': 30, 'max_features': 0.3, 'min_samples_leaf': 2, 'n_estimators': 100}: validation F1 with 1 tree=0.9949, all trees=0.9977
+2026-10-18 23:53:02 | [NSL-KDD] IsolationForest threshold chosen on validation = 0.4408
+2026-10-18 23:53:03 | [NSL-KDD] ROC curves and confusion matrices computed for 6 models
+2026-10-18 23:53:06 | saved model inventory: 19 files, 85.7 MB

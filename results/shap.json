@@ -1,0 +1,291 @@
+{
+ "CIC-IDS2017": {
+  "global_xgb": {
+   "Bwd Packet Length Std": 1.9036699533462524,
+   "Init_Win_bytes_forward": 1.4744600057601929,
+   "Init_Win_bytes_backward": 1.4315600395202637,
+   "Bwd Packet Length Mean": 1.0997999906539917,
+   "Fwd IAT Mean": 0.6232200264930725,
+   "Fwd Packet Length Max": 0.6223899722099304,
+   "Fwd Header Length": 0.5628200173377991,
+   "Flow IAT Min": 0.41854000091552734,
+   "Packet Length Std": 0.3848400115966797,
+   "Fwd IAT Max": 0.381879985332489,
+   "Fwd IAT Min": 0.38144001364707947,
+   "Bwd Packet Length Min": 0.3622699975967407,
+   "min_seg_size_forward": 0.3549500107765198,
+   "Total Length of Fwd Packets": 0.28380000591278076,
+   "Avg Bwd Segment Size": 0.26170000433921814
+  },
+  "global_lgbm": {
+   "Bwd Packet Length Std": 3.504,
+   "Init_Win_bytes_backward": 3.42527,
+   "Init_Win_bytes_forward": 2.76033,
+   "Bwd Packet Length Mean": 2.19527,
+   "min_seg_size_forward": 1.03122,
+   "Fwd Header Length": 0.86454,
+   "Fwd Packet Length Max": 0.77242,
+   "Fwd IAT Mean": 0.76547,
+   "Average Packet Size": 0.64521,
+   "Bwd Packet Length Min": 0.63693,
+   "Flow IAT Min": 0.55209,
+   "Fwd IAT Min": 0.51709,
+   "Fwd IAT Max": 0.44511,
+   "Total Length of Fwd Packets": 0.42959,
+   "Total Length of Bwd Packets": 0.34859
+  },
+  "bootstrap_spearman": [
+   0.9997605507333135,
+   0.9996009178888557,
+   0.9997206425221989,
+   0.9996408260999702,
+   0.9996009178888557
+  ],
+  "top10_overlap_xgb_lgbm": 7,
+  "rank_corr_xgb_lgbm": 0.816142442812933,
+  "local_example": {
+   "index": 586,
+   "family": "DoS",
+   "prob": 0.9999979734420776,
+   "contributions": {
+    "Bwd Packet Length Std": 5.144899845123291,
+    "Init_Win_bytes_backward": 2.785900115966797,
+    "Init_Win_bytes_forward": 1.7417000532150269,
+    "Bwd Packet Length Mean": 0.7386000156402588,
+    "Idle Max": 0.696399986743927,
+    "Packet Length Std": 0.6906999945640564,
+    "Fwd IAT Mean": 0.4997999966144562,
+    "Fwd Packet Length Max": -0.4984999895095825
+   }
+  },
+  "per_family_top3": {
+   "Benign": [
+    "Init_Win_bytes_forward",
+    "Bwd Packet Length Mean",
+    "Init_Win_bytes_backward"
+   ],
+   "DoS": [
+    "Bwd Packet Length Std",
+    "Init_Win_bytes_backward",
+    "Init_Win_bytes_forward"
+   ],
+   "PortScan": [
+    "min_seg_size_forward",
+    "Packet Length Std",
+    "Bwd Packet Length Mean"
+   ],
+   "Bot": [
+    "Init_Win_bytes_backward",
+    "Bwd Packet Length Mean",
+    "Fwd Header Length"
+   ],
+   "BruteForce": [
+    "Init_Win_bytes_backward",
+    "Bwd Packet Length Mean",
+    "Fwd IAT Min"
+   ],
+   "WebAttack": [
+    "Fwd IAT Min",
+    "Fwd Header Length",
+    "Bwd Packet Length Mean"
+   ]
+  },
+  "additivity_max_err": 1.52587890625e-05
+ },
+ "UNSW-NB15": {
+  "global_xgb": {
+   "sttl": 3.0384700298309326,
+   "service_dns": 0.7385299801826477,
+   "ct_state_ttl": 0.6264700293540955,
+   "ct_srv_dst": 0.4924499988555908,
+   "ct_dst_sport_ltm": 0.4227699935436249,
+   "sbytes": 0.3076300024986267,
+   "ct_dst_src_ltm": 0.2782599925994873,
+   "smean": 0.2653299868106842,
+   "ct_srv_src": 0.23531000316143036,
+   "dbytes": 0.23242999613285065,
+   "proto_other": 0.1534000039100647,
+   "dtcpb": 0.12403000146150589,
+   "service_-": 0.11962000280618668,
+   "ct_src_ltm": 0.1166900023818016,
+   "dmean": 0.10740000009536743
+  },
+  "global_lgbm": {
+   "sttl": 4.93016,
+   "ct_state_ttl": 1.08727,
+   "service_dns": 0.89226,
+   "ct_srv_dst": 0.53933,
+   "dbytes": 0.26897,
+   "ct_dst_sport_ltm": 0.26728,
+   "proto_other": 0.25086,
+   "ct_dst_src_ltm": 0.20931,
+   "dttl": 0.18882,
+   "ct_srv_src": 0.1715,
+   "smean": 0.16424,
+   "sbytes": 0.14636,
+   "dmean": 0.12061,
+   "dload": 0.09631,
+   "proto_unas": 0.08836
+  },
+  "bootstrap_spearman": [
+   0.9995972171365798,
+   0.9996704503844743,
+   0.9997070670084216,
+   0.9996338337605271,
+   0.9998535335042108
+  ],
+  "top10_overlap_xgb_lgbm": 8,
+  "rank_corr_xgb_lgbm": 0.9440566220043102,
+  "local_example": {
+   "index": 14184,
+   "family": "Generic",
+   "prob": 0.9999533891677856,
+   "contributions": {
+    "service_dns": 2.8922998905181885,
+    "sttl": 1.6698999404907227,
+    "ct_dst_sport_ltm": 1.4119999408721924,
+    "ct_dst_src_ltm": 0.695900022983551,
+    "sbytes": 0.48969998955726624,
+    "ct_src_dport_ltm": 0.3801000118255615,
+    "ct_state_ttl": 0.35740000009536743,
+    "service_-": 0.33660000562667847
+   }
+  },
+  "per_family_top3": {
+   "Normal": [
+    "sttl",
+    "ct_state_ttl",
+    "ct_srv_dst"
+   ],
+   "Generic": [
+    "service_dns",
+    "sttl",
+    "ct_dst_sport_ltm"
+   ],
+   "DoS": [
+    "sttl",
+    "proto_other",
+    "sbytes"
+   ],
+   "Fuzzers": [
+    "sttl",
+    "ct_srv_dst",
+    "ct_dst_src_ltm"
+   ],
+   "Exploits": [
+    "sttl",
+    "ct_srv_dst",
+    "dbytes"
+   ],
+   "Reconnaissance": [
+    "sttl",
+    "ct_srv_dst",
+    "sbytes"
+   ],
+   "Shellcode": [
+    "sttl",
+    "ct_srv_dst",
+    "ct_dst_src_ltm"
+   ],
+   "Backdoor": [
+    "sttl",
+    "ct_dst_sport_ltm",
+    "proto_other"
+   ],
+   "Analysis": [
+    "proto_other",
+    "sttl",
+    "ct_dst_sport_ltm"
+   ]
+  },
+  "additivity_max_err": 1.621246337890625e-05
+ },
+ "NSL-KDD": {
+  "global_xgb": {
+   "src_bytes": 4.464089870452881,
+   "dst_bytes": 1.1567200422286987,
+   "count": 1.1287200450897217,
+   "dst_host_srv_count": 0.9592900276184082,
+   "dst_host_rerror_rate": 0.8996599912643433,
+   "dst_host_same_src_port_rate": 0.8128499984741211,
+   "dst_host_same_srv_rate": 0.791890025138855,
+   "service_private": 0.6178900003433228,
+   "dst_host_diff_srv_rate": 0.5442699790000916,
+   "hot": 0.5146300196647644,
+   "dst_host_count": 0.4506300091743469,
+   "service_ecr_i": 0.39445000886917114,
+   "service_http": 0.3791399896144867,
+   "dst_host_srv_serror_rate": 0.3770799934864044,
+   "duration": 0.37303999066352844
+  },
+  "global_lgbm": {
+   "src_bytes": 6.39782,
+   "dst_host_srv_count": 2.1089,
+   "dst_bytes": 1.79491,
+   "count": 1.43351,
+   "dst_host_srv_serror_rate": 1.06753,
+   "dst_host_rerror_rate": 1.03956,
+   "dst_host_same_srv_rate": 0.90561,
+   "same_srv_rate": 0.88746,
+   "service_private": 0.85148,
+   "dst_host_same_src_port_rate": 0.69269,
+   "dst_host_serror_rate": 0.62459,
+   "dst_host_diff_srv_rate": 0.61438,
+   "service_http": 0.50603,
+   "diff_srv_rate": 0.50283,
+   "dst_host_srv_diff_host_rate": 0.49324
+  },
+  "bootstrap_spearman": [
+   0.9998934271174701,
+   0.9998553653737092,
+   0.999832528327453,
+   0.999832528327453,
+   0.999832528327453
+  ],
+  "top10_overlap_xgb_lgbm": 8,
+  "rank_corr_xgb_lgbm": 0.9554773493452041,
+  "local_example": {
+   "index": 3141,
+   "family": "DoS",
+   "prob": 0.9999998807907104,
+   "contributions": {
+    "src_bytes": 6.683199882507324,
+    "count": 2.1491000652313232,
+    "service_private": 1.436400055885315,
+    "flag_S0": 1.1349999904632568,
+    "dst_host_srv_serror_rate": 0.9211999773979187,
+    "dst_host_same_srv_rate": 0.8729000091552734,
+    "dst_bytes": 0.7936000227928162,
+    "dst_host_diff_srv_rate": 0.7473000288009644
+   }
+  },
+  "per_family_top3": {
+   "DoS": [
+    "src_bytes",
+    "count",
+    "dst_host_rerror_rate"
+   ],
+   "Normal": [
+    "src_bytes",
+    "dst_host_srv_count",
+    "dst_bytes"
+   ],
+   "R2L": [
+    "src_bytes",
+    "dst_bytes",
+    "dst_host_same_src_port_rate"
+   ],
+   "Probe": [
+    "src_bytes",
+    "count",
+    "dst_host_rerror_rate"
+   ],
+   "U2R": [
+    "src_bytes",
+    "hot",
+    "dst_bytes"
+   ]
+  },
+  "additivity_max_err": 2.47955322265625e-05
+ }
+}

@@ -1,0 +1,26 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+body{font-family:"Comic Sans MS","Liberation Sans",sans-serif;background:#fff;margin:0;padding:18px;color:#333;display:flex;gap:28px}
+.frame{border:2px solid #555;width:520px;border-radius:6px;padding:0 0 12px}
+.ttl{font-weight:bold;padding:6px 10px;font-size:15px}
+.bar{border-bottom:2px solid #555;padding:8px 10px;display:flex;justify-content:space-between;font-size:12px;background:#f2f2f2}
+.box{border:1.5px dashed #777;margin:10px;padding:8px;font-size:12px;border-radius:4px}
+.row{display:flex;gap:8px;margin:0 10px}.row .box{flex:1;margin:10px 0;text-align:center}
+.x{background:repeating-linear-gradient(45deg,#fafafa,#fafafa 6px,#eee 6px,#eee 12px)}
+.btn{display:inline-block;border:1.5px solid #555;border-radius:4px;padding:3px 8px;margin-right:6px}
+.line{height:8px;background:#ddd;margin:6px 0;border-radius:3px}.note{color:#a33;font-size:11px}
+</style></head><body>
+<div><div class="ttl">Wireframe A – Analyse traffic</div><div class="frame">
+ <div class="bar"><span>[Logo] Explainable NIDS</span><span>Monitor | <u>Analyse</u> | History | Performance | Help</span></div>
+ <div class="box">Page title + one-line instructions (accepted format, size limits)<br><br>[ Choose file ]  <span class="btn">Analyse file</span><span class="btn">Use sample</span></div>
+ <div class="box" style="border-color:#c55">Error / success banner (plain language, specific cause)</div>
+ <div class="row"><div class="box">KPI: flows</div><div class="box">KPI: alerts</div><div class="box">KPI: invalid rows</div><div class="box">KPI: ms / flow</div></div>
+ <div class="box">Results table – alerts first<br>Row | Verdict pill | Probability | Label | Why (top-3 SHAP reasons)<div class="line"></div><div class="line"></div><div class="line"></div><div class="line"></div></div>
+ <div class="note" style="margin:0 10px">Shneiderman: overview (KPIs) → details on demand (reasons per row)</div>
+</div></div>
+<div><div class="ttl">Wireframe B – Live monitor</div><div class="frame">
+ <div class="bar"><span>[Logo] Explainable NIDS</span><span><u>Monitor</u> | Analyse | History | Performance | Help</span></div>
+ <div class="row"><div class="box">Flows</div><div class="box">Alerts</div><div class="box">% confirmed</div><div class="box">Latency</div></div>
+ <div class="row"><div class="box x" style="flex:3;height:90px">Attack-probability strip (last 300 flows)<br>red = alert, blue = benign</div><div class="box" style="flex:1.3">Top alert drivers (SHAP)</div></div>
+ <div class="box">Recent alerts with explanations<div class="line"></div><div class="line"></div><div class="line"></div></div>
+ <div class="note" style="margin:0 10px">Nielsen: visibility of system status (auto-refresh 5 s), recognition over recall</div>
+</div></div></body></html>

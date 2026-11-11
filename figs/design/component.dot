@@ -1,0 +1,22 @@
+digraph C { rankdir=LR; bgcolor=white; nodesep=0.35; ranksep=0.75; newrank=true;
+ node[shape=component, style=filled, fontname="Liberation Sans", fontsize=10.5, color="#3b4a5a", penwidth=1.1];
+ edge[color="#3b4a5a", arrowsize=0.75, fontname="Liberation Sans", fontsize=9, style=dashed, arrowhead=vee];
+ subgraph cluster_fe{label="«subsystem» Front end"; style="rounded"; color="#7a8796"; fontname="Liberation Sans Bold"; fontsize=11;
+  ui[label="Web UI\n(index, analyse, history,\nperformance, help)", fillcolor="#e8eef6"];
+  repo[label="Repository\n(inc/db.php, PDO)", fillcolor="#e8eef6"]; }
+ subgraph cluster_ce{label="«subsystem» Core engine"; style="rounded"; color="#7a8796"; fontname="Liberation Sans Bold"; fontsize=11;
+  api[label="API Controller\n(Flask, api.py)", fillcolor="#fff4e0"];
+  pre[label="Pre-processor\n(column check, scaler)", fillcolor="#fff4e0"];
+  clf[label="Classifier\n(XGBoost)", fillcolor="#fff4e0"];
+  exp[label="Explainer\n(TreeSHAP)", fillcolor="#fff4e0"]; }
+ subgraph cluster_be{label="«subsystem» Back end"; style="rounded"; color="#7a8796"; fontname="Liberation Sans Bold"; fontsize=11;
+  dbase[label="«database»\nSQLite / MySQL", shape=cylinder, fillcolor="#e9f5ec"];
+  store[label="Model Store\n(joblib artefacts)", fillcolor="#e9f5ec"]; }
+ train[label="Training Pipeline\n(offline)", fillcolor="#f3e9f6"];
+ replay[label="Replay Client", fillcolor="#f3e9f6"];
+ ui->api[label="IAnalysisAPI\n(JSON/HTTP)"]; replay->api[label="IAnalysisAPI"];
+ ui->repo[label="IPersistence"]; repo->dbase[label="SQL"]; replay->dbase[label="SQL"];
+ api->pre[label="IPreprocess"]; api->clf[label="IPredict"]; api->exp[label="IExplain"]; exp->clf[label="tree structure"];
+ pre->store[label="IModelStore\n(scaler, columns)"]; clf->store[label="IModelStore\n(booster, threshold)"]; train->store[label="writes"];
+ {rank=same; ui; replay;} {rank=same; train; dbase;}
+}

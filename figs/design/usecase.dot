@@ -1,0 +1,21 @@
+digraph UC { rankdir=LR; bgcolor=white; nodesep=0.25; ranksep=0.6;
+ node[fontname="Liberation Sans", fontsize=11];
+ analyst[shape=none, label="", image="actor.png", labelloc=b, xlabel="SME analyst"];
+ eng[shape=none, label="", image="actor.png", xlabel="ML engineer\n(researcher)"];
+ exporter[shape=box, style="rounded,filled", fillcolor="#eef1f5", label="«system»\nFlow exporter /\nreplay client"];
+ subgraph cluster_sys { label="Explainable NIDS"; fontname="Liberation Sans"; fontsize=12; style=rounded; color="#7a8796";
+  node[shape=ellipse, style=filled, fillcolor="#e8eef6", color="#3b4a5a"];
+  u1[label="Upload traffic file"]; u2[label="View alerts and\nSHAP explanations"]; u3[label="Monitor live stream"];
+  u4[label="Review past analyses"]; u5[label="View model performance"]; u6[label="Read help"];
+  u7[label="Validate uploaded file", fillcolor="#fff4e0"]; u8[label="Score and explain flows", fillcolor="#fff4e0"];
+  {rank=same; u7; u8;}
+  u9[label="Prepare data, train\nand evaluate models", fillcolor="#e9f5ec"]; u10[label="Deploy model to API", fillcolor="#e9f5ec"];
+ }
+ edge[color="#3b4a5a", arrowhead=none];
+ analyst->u1; analyst->u2; analyst->u3; analyst->u4; analyst->u5; analyst->u6;
+ eng->u9; eng->u10; 
+  u3->exporter[style=solid, arrowhead=none, constraint=false];
+  u8->exporter[style=invis];
+ edge[style=dashed, arrowhead=vee, fontsize=9, fontname="Liberation Sans"];
+ u1->u7[label="«include»"]; u1->u8[label="«include»"]; u3->u8[label="«include»"]; u2->u1[label="«extend»", constraint=false];
+}

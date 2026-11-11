@@ -1,0 +1,20 @@
+digraph DFD {
+  rankdir=TB; nodesep=0.5; ranksep=0.35; bgcolor=white;
+  node [fontname="Liberation Sans", fontsize=11, color="#3b4a5a", penwidth=1.1];
+  edge [fontname="Liberation Sans", fontsize=9, color="#3b4a5a", arrowsize=0.7];
+  ext1 [label="Public datasets\n(UNB CIC, UNSW)", shape=box, style=filled, fillcolor="#e8eef6"];
+  ext2 [label="SME analyst", shape=box, style=filled, fillcolor="#e8eef6"];
+  p1 [label="1.0\nPre-process", shape=circle, style=filled, fillcolor="#fff4e0", width=1.1];
+  p2 [label="2.0\nTrain & tune", shape=circle, style=filled, fillcolor="#fff4e0", width=1.1];
+  p3 [label="3.0\nEvaluate", shape=circle, style=filled, fillcolor="#fff4e0", width=1.1];
+  p4 [label="4.0\nScore & explain\n(REST API)", shape=circle, style=filled, fillcolor="#fff4e0", width=1.1];
+  p5 [label="5.0\nVisualise\n(dashboard)", shape=circle, style=filled, fillcolor="#fff4e0", width=1.1];
+  d1 [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5"><tr><td bgcolor="#e9f5ec"><b>D1</b></td><td bgcolor="#e9f5ec">Clean splits (DataFrames)</td></tr></table>>, shape=plain, ];
+  d2 [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5"><tr><td bgcolor="#e9f5ec"><b>D2</b></td><td bgcolor="#e9f5ec">Model store (joblib)</td></tr></table>>, shape=plain, ];
+  d3 [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5"><tr><td bgcolor="#e9f5ec"><b>D3</b></td><td bgcolor="#e9f5ec">Results (JSON, figures)</td></tr></table>>, shape=plain, ];
+  d4 [label=<<table border="0" cellborder="1" cellspacing="0" cellpadding="5"><tr><td bgcolor="#e9f5ec"><b>D4</b></td><td bgcolor="#e9f5ec">Alert store (SQLite / MySQL)</td></tr></table>>, shape=plain, ];
+  ext1 -> p1 [label="raw flow records"]; p1 -> d1 [label="scaled features"];
+  d1 -> p2; p2 -> d2 [label="tuned models"]; d1 -> p3; d2 -> p3; p3 -> d3 [label="metrics, tests"];
+  d2 -> p4 [label="best model"]; p4 -> d4 [label="score, alert,\nSHAP reasons"]; d4 -> p5; p5 -> ext2 [label="alerts +\nexplanations"];
+  {rank=same; p2; d2;} {rank=same; p3; d3; p4;} {rank=same; d4; p5; ext2;}
+}

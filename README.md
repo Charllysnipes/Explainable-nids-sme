@@ -4,6 +4,8 @@ Explainable machine learning for real-time network anomaly detection in small an
 
 Code, results and prototype for the COM748 Masters Research Project *Explainable Machine Learning for Real-Time Network Anomaly Detection in Small and Medium-Sized Enterprises*, by Charles Chinemerem Ezeh (MSc Computer Science and Technology with Business Development, Ulster University, QAHE London). Supervisor: Anwar Haq.
 
+**Demonstration video (3 minutes):** https://youtu.be/bPj0MSedLaw
+
 ## What the project does
 
 Six models (Naive Bayes, Random Forest, XGBoost, LightGBM, MLP and Isolation Forest) are compared on CIC-IDS2017, UNSW-NB15 and NSL-KDD under one leakage-free pipeline. The study adds significance tests, unseen-attack, cross-network and noise tests, and TreeSHAP explanations with measured stability. The best model (XGBoost) is deployed behind a Flask REST API and a PHP dashboard that shows each alert with its probability and three SHAP reasons.

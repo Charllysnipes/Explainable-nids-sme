@@ -1,5 +1,5 @@
 # datasets (download with scripts/get_data.sh) and trained models (rebuild with run_main.py)
-data/
+data
 results/models/
 # run-time files
 *.db
